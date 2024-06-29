@@ -14,7 +14,6 @@ void kernel_main() {
     printLine("And another line after waiting...", 15);
     wait(50000);
     printLine("Waited 1 second", 15);
-    
     while (1) {
         asm volatile ("hlt");
     }

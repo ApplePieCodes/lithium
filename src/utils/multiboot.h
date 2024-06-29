@@ -11,4 +11,4 @@ __attribute__((section(".multiboot"))) const unsigned int multiboot_header[] = {
     CHECKSUM
 };
 
-#endif // MULTIBOOT_H
+#endif

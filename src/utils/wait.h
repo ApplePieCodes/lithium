@@ -3,4 +3,4 @@
 
 void wait(unsigned int milliseconds);
 
-#endif // WAIT_H
+#endif

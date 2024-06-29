@@ -13,4 +13,4 @@ static inline uint8_t inb(uint16_t port) {
     return ret;
 }
 
-#endif // IO_H
+#endif

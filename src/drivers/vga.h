@@ -15,4 +15,4 @@ void scrollScreen(uint8_t color);
 void printString(int x, int y, const char* str, uint8_t color);
 void printLine(const char* str, uint8_t color);
 
-#endif // VGA_H
+#endif

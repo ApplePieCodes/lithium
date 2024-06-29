@@ -5,4 +5,4 @@
 
 void idt_init(void);
 
-#endif // IDT_H
+#endif

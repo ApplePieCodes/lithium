@@ -27,7 +27,6 @@ void keyboard_handler(void) {
     uint8_t status;
     char keycode;
 
-    // Write end of interrupt (EOI) to the PICs
     outb(PIC1_COMMAND, PIC_EOI);
 
     status = inb(KEYBOARD_STATUS_PORT);
@@ -35,11 +34,11 @@ void keyboard_handler(void) {
         keycode = inb(KEYBOARD_DATA_PORT);
         if (keycode >= 0) {
             char c = keymap[(unsigned char)keycode];
-            printChar(0, 0, c, 15); // Print character at top-left corner (you can change this)
+            printChar(0, 0, c, 15);
         }
     }
 }
 
 void keyboard_init(void) {
-    outb(0x21, 0xFD); // Enable keyboard interrupts
+    outb(0x21, 0xFD);
 }

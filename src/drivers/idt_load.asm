@@ -1,5 +1,5 @@
-section .data          ; Define a data section (for global/static variables)
-    extern idtp        ; Declare idtp as an external symbol
+section .data
+    extern idtp
 
 section .text
 global idt_load

@@ -12,7 +12,7 @@ void kernel_main() {
     printLine("Hello World!", 15);
     printLine("This is a new line.", 15);
     printLine("And another line after waiting...", 15);
-    wait(50000); // Wait for 1 second (1000 milliseconds)
+    wait(50000);
     printLine("Waited 1 second", 15);
     
     while (1) {

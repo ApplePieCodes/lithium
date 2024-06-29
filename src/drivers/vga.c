@@ -1,7 +1,9 @@
 #include "vga.h"
 
+int y = 0;
+
 void printLine(const char* str, uint8_t color) {
-    int x = 0, y = 0;
+    int x = 0;
     while (*str != '\0') {
         if (x >= VGA_WIDTH) {
             x = 0;
@@ -67,7 +69,7 @@ void clearScreen(uint8_t color) {
 }
 
 void setPixel(int x, int y, uint8_t color) {
-    uint8_t* vga_memory = (uint8_t*)VGA_BASE;
+    uint16_t* vga_memory = (uint16_t*)VGA_BASE;
 
     int offset = y * VGA_WIDTH + x;
     vga_memory[offset] = color;

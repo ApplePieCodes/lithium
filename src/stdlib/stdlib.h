@@ -4,5 +4,6 @@
 #include "string/string.h"
 #include "tty.h"
 #include "vga.h"
+#include "stdio/stdio.h"
 
 #endif

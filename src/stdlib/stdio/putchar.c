@@ -1,11 +1,8 @@
-#include <stdio.h>
-
-#if defined(__is_libk)
-#include <kernel/tty.h>
-#endif
+#include "stdio.h"
+#include "../tty.h"
 
 int putchar(int ic) {
-	char c = (char) ic;
-	terminal_write(&c, sizeof(c));
-	return ic;
+    char c = (char) ic;
+    terminal_write(&c, sizeof(c));
+    return ic;
 }

@@ -3,6 +3,12 @@
         "idt.h": "c",
         "keyboard.h": "c",
         "string.h": "c",
-        "stdio.h": "c"
+        "stdio.h": "c",
+        "gdt.h": "c",
+        "stdint.h": "c",
+        "vga.h": "c",
+        "memutils.h": "c",
+        "stddef.h": "c",
+        "efi.h": "c"
     }
 }

@@ -1,11 +1,5 @@
-i686-elf-gcc -c src/kernel.c -std=gnu99 -ffreestanding -O2 -Wall -Wextra
-i686-elf-gcc -c stdlib/string/memcmp.c -std=gnu99 -ffreestanding -O2 -Wall -Wextra
-i686-elf-gcc -c stdlib/string/memcpy.c -std=gnu99 -ffreestanding -O2 -Wall -Wextra
-i686-elf-gcc -c stdlib/string/memmove.c -std=gnu99 -ffreestanding -O2 -Wall -Wextra
-i686-elf-gcc -c stdlib/string/memset.c -std=gnu99 -ffreestanding -O2 -Wall -Wextra
-i686-elf-gcc -c stdlib/string/strlen.c -std=gnu99 -ffreestanding -O2 -Wall -Wextra
-i686-elf-gcc -c stdlib/strlen.c -std=gnu99 -ffreestanding -O2 -Wall -Wextra
-i686-elf-gcc -T src/linker.ld -o lithium.bin kernel.o memcmp.o memcpy.o memmove.o memset.o strlen.o -ffreestanding -O2 -nostdlib -lgcc
+i686-elf-gcc -c src/kernel.c src/tty.c src/stdio/printf.c src/stdio/putchar.c src/stdio/puts.c src/string/memcmp.c src/string/memcpy.c src/string/memmove.c src/string/memset.c src/string/strlen.c -std=gnu99 -ffreestanding -O2 -Wall -Wextra
+i686-elf-gcc -T src/linker.ld -o lithium.bin kernel.o tty.o printf.o putchar.o puts.o memcmp.o memcpy.o memmove.o memset.o strlen.o -ffreestanding -O2 -nostdlib -lgcc
 
 mkdir -p iso/boot/grub
 cat > iso/boot/grub/grub.cfg << EOF

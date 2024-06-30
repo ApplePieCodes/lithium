@@ -1,8 +1,9 @@
 i686-elf-gcc -c src/kernel.c -std=gnu99 -ffreestanding -O2 -Wall -Wextra
-i686-elf-gcc -c stdlib/memcmp.c -std=gnu99 -ffreestanding -O2 -Wall -Wextra
-i686-elf-gcc -c stdlib/memcpy.c -std=gnu99 -ffreestanding -O2 -Wall -Wextra
-i686-elf-gcc -c stdlib/memmove.c -std=gnu99 -ffreestanding -O2 -Wall -Wextra
-i686-elf-gcc -c stdlib/memset.c -std=gnu99 -ffreestanding -O2 -Wall -Wextra
+i686-elf-gcc -c stdlib/string/memcmp.c -std=gnu99 -ffreestanding -O2 -Wall -Wextra
+i686-elf-gcc -c stdlib/string/memcpy.c -std=gnu99 -ffreestanding -O2 -Wall -Wextra
+i686-elf-gcc -c stdlib/string/memmove.c -std=gnu99 -ffreestanding -O2 -Wall -Wextra
+i686-elf-gcc -c stdlib/string/memset.c -std=gnu99 -ffreestanding -O2 -Wall -Wextra
+i686-elf-gcc -c stdlib/string/strlen.c -std=gnu99 -ffreestanding -O2 -Wall -Wextra
 i686-elf-gcc -c stdlib/strlen.c -std=gnu99 -ffreestanding -O2 -Wall -Wextra
 i686-elf-gcc -T src/linker.ld -o lithium.bin kernel.o memcmp.o memcpy.o memmove.o memset.o strlen.o -ffreestanding -O2 -nostdlib -lgcc
 

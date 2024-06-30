@@ -1,6 +1,10 @@
-i686-elf-gcc -c src/kernel.c src/drivers/vga.c src/utils/wait.c src/drivers/idt.c src/drivers/keyboard.c -std=gnu99 -ffreestanding -O2 -Wall -Wextra
-nasm -f elf32 src/drivers/idt_load.asm -o idt_load.o
-i686-elf-gcc -T src/linker.ld -o lithium.bin kernel.o vga.o wait.o idt.o keyboard.o idt_load.o -ffreestanding -O2 -nostdlib -lgcc
+i686-elf-gcc -c src/kernel.c -std=gnu99 -ffreestanding -O2 -Wall -Wextra
+i686-elf-gcc -c stdlib/memcmp.c -std=gnu99 -ffreestanding -O2 -Wall -Wextra
+i686-elf-gcc -c stdlib/memcpy.c -std=gnu99 -ffreestanding -O2 -Wall -Wextra
+i686-elf-gcc -c stdlib/memmove.c -std=gnu99 -ffreestanding -O2 -Wall -Wextra
+i686-elf-gcc -c stdlib/memset.c -std=gnu99 -ffreestanding -O2 -Wall -Wextra
+i686-elf-gcc -c stdlib/strlen.c -std=gnu99 -ffreestanding -O2 -Wall -Wextra
+i686-elf-gcc -T src/linker.ld -o lithium.bin kernel.o memcmp.o memcpy.o memmove.o memset.o strlen.o -ffreestanding -O2 -nostdlib -lgcc
 
 mkdir -p iso/boot/grub
 cat > iso/boot/grub/grub.cfg << EOF

@@ -1,0 +1,11 @@
+{
+    "files.associations": {
+        "limine.h": "c",
+        "gdt.h": "c",
+        "spinlock.h": "c",
+        "stdbool.h": "c",
+        "cpu.h": "c",
+        "serial.h": "c"
+    },
+    "C_Cpp.errorSquiggles": "disabled"
+}

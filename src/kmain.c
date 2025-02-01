@@ -2,6 +2,7 @@
 #include <stddef.h>
 #ifdef ARCH_x86_64
 #include <arch/x86_64/cpu/gdt.h>
+#include <arch/x86_64/cpu/idt.h>
 #endif
 
 __attribute__((used, section(".limine_requests")))
@@ -16,6 +17,7 @@ static volatile LIMINE_REQUESTS_END_MARKER;
 void kmain() {
     #ifdef ARCH_x86_64
     gdt_init();
+    idt_init();
     #endif
 
     for (;;) {

@@ -17,10 +17,4 @@ typedef struct idt_desc {
     uint64_t base;
 } __attribute__((packed)) idt_desc_t;
 
-idt_entry_t idt_table[256];
-
-extern void idt_load(idt_desc_t *idt_ptr);
-
-void idt_reload();
-void idt_set_gate(uint16_t num, uint64_t base, uint16_t selector, uint8_t flags);
 void idt_init();

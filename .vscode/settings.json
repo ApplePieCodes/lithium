@@ -7,7 +7,9 @@
         "stdbool.h": "c",
         "cpu.h": "c",
         "serial.h": "c",
-        "idt.h": "c"
+        "idt.h": "c",
+        "pmm.h": "c",
+        "string.h": "c"
     },
     "C_Cpp.errorSquiggles": "disabled"
 }

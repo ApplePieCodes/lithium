@@ -2,10 +2,7 @@
 
 #include <stddef.h>
 
-inline void *memset(void *ptr, int value, size_t num) {
-    unsigned char *p = (unsigned char *)ptr;
-    while (num--) {
-        *p++ = (unsigned char)value;
-    }
-    return ptr;
-}
+void *memcpy(void *dest, const void *src, size_t n);
+void *memset(void *ptr, int value, size_t num);
+void *memmove(void *dest, const void *src, size_t n);
+int memcmp(const void *s1, const void *s2, size_t n);

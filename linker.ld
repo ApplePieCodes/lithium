@@ -24,4 +24,6 @@ SECTIONS {
     .bss : {
         *(.bss)
     }
+
+    KERNEL_END_SYMBOL = .;
 }

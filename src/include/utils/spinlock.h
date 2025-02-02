@@ -6,4 +6,4 @@ typedef struct lock {
 } lock_t;
 
 void spinlock_lock(lock_t *lock);
-void spinlock_unlock();
+void spinlock_unlock(lock_t *lock);

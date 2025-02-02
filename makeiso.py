@@ -32,9 +32,10 @@ def build_iso():
     os.makedirs("iso_root/boot/limine", exist_ok=True)
     with open("iso_root/boot/limine/limine.conf", "w") as f:
         f.write("timeout: 3\n")
-        f.write("wallpaper: boot():/boot/bg.png\n")
+        #f.write("wallpaper: boot():/boot/bg.png\n")
         f.write("/lithium\n")
         f.write("    protocol: limine\n")
+        f.write("    resolution: 1280x720x32\n")
         f.write("    path: boot():/boot/kernel.elf\n")
     
     # Copying Limine binaries

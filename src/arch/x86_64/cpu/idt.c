@@ -2,6 +2,9 @@
 #include <arch/x86_64/cpu/isr.h>
 
 extern void idt_load(idt_desc_t *idt_ptr);
+extern void isr0_asm();
+extern void isr1_asm();
+extern void isr2_asm();
 idt_entry_t idt_table[256];
 
 void idt_set_gate(uint16_t num, uint64_t base, uint16_t selector, uint8_t flags) {
@@ -26,7 +29,7 @@ void idt_reload() {
 
 void idt_init() {
 
-    idt_set_gate(0, (uint64_t)isr0, 0x28, 0x8E); // Division by 0
+    idt_set_gate(0, (uint64_t)isr0_asm, 0x28, 0x8E); // Division by 0
     
 
     idt_reload();

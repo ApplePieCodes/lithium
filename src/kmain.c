@@ -1,5 +1,6 @@
 #include <limine.h>
 #include <stddef.h>
+#include <kernel.h>
 #ifdef ARCH_x86_64
 #include <arch/x86_64/cpu/gdt.h>
 #include <arch/x86_64/cpu/idt.h>
@@ -10,6 +11,12 @@ static volatile LIMINE_BASE_REVISION(3);
 
 __attribute__((used, section(".limine_requests_start")))
 static volatile LIMINE_REQUESTS_START_MARKER;
+
+__attribute__((used, section(".limine_requests")))
+volatile struct limine_memmap_request memmap_request = {
+    .id = LIMINE_MEMMAP_REQUEST,
+    .revision = 0
+};
 
 __attribute__((used, section(".limine_requests_end")))
 static volatile LIMINE_REQUESTS_END_MARKER;

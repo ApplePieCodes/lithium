@@ -35,7 +35,6 @@ def build_iso():
         #f.write("wallpaper: boot():/boot/bg.png\n")
         f.write("/lithium\n")
         f.write("    protocol: limine\n")
-        f.write("    resolution: 1280x720x32\n")
         f.write("    path: boot():/boot/kernel.elf\n")
     
     # Copying Limine binaries

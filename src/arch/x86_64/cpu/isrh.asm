@@ -195,3 +195,11 @@ isr19_asm:
     call isr19
     RESTORE_REGISTERS
     iret
+
+extern irq0
+global irq0_asm
+irq0_asm:
+    SAVE_REGISTERS
+    call irq0
+    RESTORE_REGISTERS
+    iret

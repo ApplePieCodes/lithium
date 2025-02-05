@@ -47,4 +47,6 @@ SECTIONS
         *(.eh_frame*)
         *(.note .note.*)
     }
+
+    KERNEL_END_SYMBOL = .;
 }

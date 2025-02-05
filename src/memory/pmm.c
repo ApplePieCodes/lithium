@@ -6,6 +6,10 @@
 #include <kmain.h>
 #include <libc/math.h>
 #include <libc/string.h>
+#include <term/term.h>
+#include <memory/pmm.h>
+#include <utils/panic.h>
+#include <libc/stdio.h>
 
 static uint8_t *bitmap;
 uint64_t highest_address = 0;
@@ -46,7 +50,7 @@ void pmm_init() {
             highest_address = top_address;
         }
     }
-    bitmap_size = ALIGN_UP((highest_address / 4096) / 8, 4096);
+    bitmap_size = ALIGN_UP((highest_address / PAGE_SIZE) / 8, PAGE_SIZE);
     
     for (uint64_t i = 0; i < memmap_entries; i++) {
         if (memmap[i]->type != LIMINE_MEMMAP_USABLE) {
@@ -65,11 +69,91 @@ void pmm_init() {
         if (memmap[i]->type != LIMINE_MEMMAP_USABLE) {
             continue;
         }
-        for (uint64_t j = 0; j < memmap[i]->length; j += 4096) {
+        for (uint64_t j = 0; j < memmap[i]->length; j += PAGE_SIZE) {
             free_pages++;
-            bitmap_clear((memmap[i]->base + j) / 4096);
+            bitmap_clear((memmap[i]->base + j) / PAGE_SIZE);
         }
     }
 
     spinlock_unlock(&pmm_lock);
+}
+
+static void *inner_alloc(uint64_t size, uint64_t limit) {
+    uint64_t p = 0;
+    while (last_used_index < limit) {
+        if(!bitmap_get(last_used_index++))
+        {
+            if(++p == size)
+            {
+                uint64_t page = last_used_index - size;
+                for(uint64_t i = page; i < last_used_index; i++)
+                    bitmap_set(i);
+                return (void*) (page * PAGE_SIZE);
+            }
+        }
+        else 
+        {
+            p = 0;
+        }
+    }
+    return NULL;
+}
+void* kalloc(uint64_t size)
+{
+	spinlock_lock(&pmm_lock);
+    uint64_t lui = last_used_index;
+    void* ret = inner_alloc(size, highest_address / PAGE_SIZE);
+    if (ret == NULL)
+    {
+        last_used_index = 0;
+        ret = inner_alloc(size, lui);
+        if ( ret == NULL )
+        {
+            panic("Out Of Memory", "NO_MEMORY", PANIC_HALT);
+        }
+    }
+	free_pages -= size;
+	spinlock_unlock(&pmm_lock);
+    return ret + hhdm_request.response->offset;
+}
+void* krealloc(void * ptr, uint64_t old_size, uint64_t new_size)
+{
+    if (ptr == NULL)
+        return kalloc(new_size);
+
+    if(new_size == 0)
+    {
+        kfree(ptr, old_size);
+        return NULL;
+    }
+    if (new_size < old_size)
+        old_size = new_size;
+
+    void* realloc_ptr = kalloc(new_size);
+    memcpy(realloc_ptr, ptr, old_size);
+    kfree(ptr, old_size);
+
+    return realloc_ptr;
+}
+void kfree(void * ptr, uint64_t size)
+{
+	spinlock_lock(&pmm_lock);
+    uint64_t page = (uint64_t)ptr / PAGE_SIZE;
+    for(uint64_t i = page; i < page + size; i++)
+        bitmap_clear(i);
+	free_pages += size;
+	spinlock_unlock(&pmm_lock);
+}
+
+void* kallocz(uint64_t size)
+{
+    void * ret = kalloc(size);
+    uint64_t * ptr = (uint64_t *)ret;
+
+	for (uint64_t i = 0; i < (size * PAGE_SIZE) / 8; i++)
+    {
+        ptr[i] = 0;
+    }
+
+    return ret;
 }

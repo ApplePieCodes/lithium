@@ -1,14 +1,15 @@
 #pragma once
 
-#include <stdint.h>
+/*
+    The Lithium Kernel
+    Redistrobution without this header is strictly prohibited. If modifications are made, add your own attribution below.
+    @file arch/x86_64/cpu/isr.h
+    @author Liam Greenway
+*/
 
-typedef struct interrupt_frame {
-    uint64_t rip;    // Instruction Pointer
-    uint64_t cs;     // Code Segment
-    uint64_t rflags; // CPU Flags
-    uint64_t rsp;    // Stack Pointer
-    uint64_t ss;     // Stack Segment
-} interrupt_frame_t;
+
+#include <stdint.h>
+#include <utils/panic.h>
 
 void isr0();
 void isr1();

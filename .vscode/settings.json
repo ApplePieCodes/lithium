@@ -9,7 +9,16 @@
         "serial.h": "c",
         "idt.h": "c",
         "pmm.h": "c",
-        "string.h": "c"
+        "string.h": "c",
+        "fb.h": "c",
+        "flanterm.h": "c",
+        "panic.h": "c",
+        "term.h": "c",
+        "stdint.h": "c",
+        "isr.h": "c",
+        "stdio.h": "c",
+        "pic.h": "c",
+        "timer.h": "c"
     },
     "C_Cpp.errorSquiggles": "disabled"
 }

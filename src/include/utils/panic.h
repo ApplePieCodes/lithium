@@ -7,3 +7,4 @@ enum PANIC_OPTION {
 };
 
 void panic(const char *reason, const char *error_code, int option);
+void panicex(const char *reason, const char *error_code, const char *extra_info, int option);

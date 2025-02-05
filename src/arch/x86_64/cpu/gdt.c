@@ -1,7 +1,27 @@
+/*
+    The Lithium Kernel
+    Redistrobution without this header is strictly prohibited. If modifications are made, add your own attribution below.
+    @file arch/x86_64/cpu/gdt.c
+    @author Liam Greenway
+*/
+
+#define GDT_NULL            0x00
+#define GDT_CODE_16         0x08
+#define GDT_DATA_16         0x10
+#define GDT_CODE_32         0x18
+#define GDT_DATA_32         0x20
+#define GDT_CODE_64         0x28
+#define GDT_DATA_64         0x30
+#define GDT_USER_CODE_64    0x38
+#define GDT_USER_DATA_64    0x40
+#define GDT_TSS             0x48
+
 #include <arch/x86_64/cpu/gdt.h>
 
+/// @brief GDT Table
 static gdt_t gdt_table;
 
+/// @brief Reload the GDT Descriptor
 void gdt_reload()
 {
     gdt_desc_t gdt_descriptor;
@@ -11,13 +31,17 @@ void gdt_reload()
 
     __asm__ __volatile__ ("lgdt %0" : : "m"(gdt_descriptor) : "memory");
 }
+
+/// @brief Reload the TSS
 void tss_reload()
 {
-    __asm__ __volatile__ ("ltr %0" : : "r" ((uint16_t)0x48));
+    __asm__ __volatile__ ("ltr %0" : : "r" ((uint16_t)GDT_TSS));
 }
 
+/// @brief TSS Table
 static tss_t tss_table;
 
+/// @brief Initialize the GDT
 void gdt_init() {
     gdt_table = (gdt_t){
         // Null Segment
@@ -103,17 +127,27 @@ void gdt_init() {
         },
         // TSS Segment
         .tss = (tss_desc_t){
-            .limit = ((uint64_t)&tss_table) + sizeof(tss_table),
-            .base0 = ((uint64_t)&tss_table),
+            .limit = sizeof(tss_table) - 1,  // FIXED: Correct limit calculation
+            .base0 = (uint64_t)&tss_table,
             .base1 = ((uint64_t)&tss_table) >> 16,
-            .access = 0x89,
+            .access = 0x89, // Available TSS
             .flags = 0x00,
             .base2 = ((uint64_t)&tss_table) >> 24,
             .base3 = ((uint64_t)&tss_table) >> 32,
             .reserved = 0x00
         }
     };
-    
+
     gdt_reload();
     tss_reload();
+
+    __asm__ __volatile__ (
+        "mov %0, %%ds\n"
+        "mov %0, %%es\n"
+        "mov %0, %%fs\n"
+        "mov %0, %%gs\n"
+        "mov %0, %%ss\n"
+        :
+        : "r"((uint16_t)GDT_DATA_64) // Load 64-bit data selector
+    );
 }

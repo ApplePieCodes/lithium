@@ -4,3 +4,4 @@ iso_root
 *.o
 *.elf
 *.d
+__pycache__
